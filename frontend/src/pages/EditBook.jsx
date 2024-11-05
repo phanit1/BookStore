@@ -1,91 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import './EditBook.css';
 
 const EditBook = () => {
-  const [newData, SetnewData] = useState({
-    title: "",
-    author: "",
-    publishYear: ""
-  })
-  console.log(newData);
-  const [isLoading, setLoading] = useState(false)
-  const navigate = useNavigate();
-  const { id } = useParams();
-  useEffect(() => {
-    setLoading(true)
-    axios.get(`http://localhost:5555/books/${id}`)
-      .then((res) => {
-        setLoading(false)
-        SetnewData(res.data)
-      })
-      .catch((error) => {
-        setLoading(false)
-        alert("An Error happened. Please Check Console");
-        console.log(error);
-      })
-  }, [])
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    SetnewData({ ...newData, [name]: value })
-  }
-  const handleEditBook = () => {
-    setLoading(true)
-    axios.put(`https://books-store1.vercel.app/books/${id}`, newData)
-      .then(() => {
-        setLoading(false);
-        navigate('/')
-      })
-      .catch((error) => {
-        setLoading(false);
-        alert("An Error happened. Please Check Console");
-        console.log(error);
-      })
-  }
-  return (
-    <div className='p-4'>
-      <BackButton />
-      <h1 className=' flex justify-center text-3xl my-4'>Edit Book</h1>
-      {isLoading ? <Spinner /> : ""}
-      <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Title</label>
-          <input
-            type="text"
-            name='title'
-            value={newData.title}
-            onChange={handleChange}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Author</label>
-          <input
-            type="text"
-            name='author'
-            value={newData.author}
-            onChange={handleChange}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Publish Year</label>
-          <input
-            type="text"
-            name='publishYear'
-            value={newData.publishYear}
-            onChange={handleChange}
-            className='border-2 border-gray-500 px-4 py-2 w-full'
-          />
-        </div>
-        <button className='p-2 bg-sky-300 m-8' onClick={handleEditBook}>
-          Save
-        </button>
-      </div>
-    </div>
-  )
-}
+    const { id } = useParams();
+    const [formData, setFormData] = useState({
+        id: '',
+        title: '',
+        author: '',
+        publishYear: ''
+    });
+    const navigate = useNavigate();
 
-export default EditBook
+    useEffect(() => {
+        axios.get(`https://books-store1.vercel.app/books/${id}`)
+            .then((response) => setFormData(response.data[0]))
+            .catch((error) => console.error('Error fetching book details:', error));
+    }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios.put(`https://books-store1.vercel.app/books/${id}`, formData)
+            .then(() => navigate('/'))
+            .catch((error) => console.error('Error updating book:', error));
+    };
+
+    return (
+        <div className="edit-book-container">
+            <h2>Edit Book</h2>
+            <form onSubmit={handleSubmit} className="edit-book-form">
+                <label htmlFor="title">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    required
+                />
+                <label htmlFor="author">Author</label>
+                <input
+                    type="text"
+                    name="author"
+                    value={formData.author}
+                    onChange={handleChange}
+                    required
+                />
+
+                <label htmlFor="publishYear">Publish Year</label>
+                <input
+                    type="number"
+                    name="publishYear"
+                    value={formData.publishYear}
+                    onChange={handleChange}
+                    required
+                />
+
+                <button type="submit" className="save-btn">Save Changes</button>
+                <button onClick={() => navigate(-1)} className="back-btn">Back</button>
+
+            </form>
+        </div>
+    );
+};
+
+export default EditBook;

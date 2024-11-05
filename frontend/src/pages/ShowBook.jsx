@@ -1,63 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
+import { useParams, useNavigate } from 'react-router-dom';
+import './ShowBook.css';
 
 const ShowBook = () => {
-    const [book, setBook] = useState({})
-    console.log("book",book);
-    const [isLoading, setLoading] = useState(false);
     const { id } = useParams();
-
+    const navigate = useNavigate();
+    const [book, setBook] = useState(null);
+    console.log(id,"ID")
     useEffect(() => {
-        setLoading(true);
-        axios.get(`http://localhost:5555/books/${id}`)
-            .then((res) => {
-                setBook(res.data);
-                setLoading(false)
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoading(false)
-            })
-    }, [])
+        axios.get(`https://books-store1.vercel.app/books/${id}`)
+            .then((response) => setBook(response.data[0]))
+            .catch((error) => console.error('Error:', error));
+    }, [id]);
+    console.log(book)
     return (
-        <div className='p-4'>
-            <BackButton />
-            <h1 className='text-3xl my-4'>Show Book</h1>
-            {isLoading ? (
-                <Spinner />
-            ) : (
-                <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Id</span>
-                        <span>{book._id}</span>
-                    </div>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Title</span>
-                        <span>{book.title}</span>
-                    </div>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Author</span>
-                        <span>{book.author}</span>
-                    </div>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
-                        <span>{book.publishYear}</span>
-                    </div>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Create Time</span>
-                        <span>{new Date(book.createdAt).toString()}</span>
-                    </div>
-                    <div className='my-4'>
-                        <span className='text-xl mr-4 text-gray-500'>Last Update Time</span>
-                        <span>{new Date(book.updatedAt).toString()}</span>
-                    </div>
+        <div className="show-book-container">
+            <h2>Book Details</h2>
+            
+            {book ? (
+                <div className="book-details">
+                    <p><strong>Title:</strong> {book.title}</p>
+                    <p><strong>Author:</strong> {book.author}</p>
+                    <p><strong>Publish Year:</strong> {book.publishYear}</p>
+                    <button onClick={() => navigate(-1)} className="back-btn">Back</button>
                 </div>
+            ) : (
+                <p>Loading...</p>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default ShowBook
+export default ShowBook;

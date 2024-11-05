@@ -1,0 +1,134 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: #f7f9fc;
+}
+
+/* Header styling */
+h1 {
+    font-size: 2em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Table container styling */
+.table-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead th {
+    background-color: #4a90e2;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+}
+
+table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f3f6fa;
+}
+
+table tbody tr:hover {
+    background-color: #eaf1fb;
+}
+
+.no-data {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.1em;
+    color: #888;
+}
+
+/* Operations icons styling */
+.operations i {
+    color: #4a90e2;
+    font-size: 1.2em;
+    margin-right: 8px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.operations i:hover {
+    color: #0056b3;
+}
+
+/* Add Button styling */
+.add-button {
+    display: inline-block;
+    background-color: #4a90e2;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.add-button:hover {
+    background-color: #0056b3;
+}
+
+/* Button container styling */
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #b0c4de;
+    cursor: not-allowed;
+}
+
+/* Spinner styling for loading */
+.spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #4a90e2;
+    border-radius: 50%;
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

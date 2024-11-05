@@ -3,41 +3,43 @@ import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import './DeleteBook.css';
 
 const DeleteBook = () => {
     const [isLoading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
+
     const handleDeleteBook = () => {
-        setLoading(true)
+        setLoading(true);
         axios.delete(`https://books-store1.vercel.app/books/${id}`)
             .then(() => {
                 setLoading(false);
-                navigate("/")
+                navigate("/");
             })
             .catch((error) => {
                 setLoading(false);
-                alert("An Error happened. Please Check Console");
+                alert("An error occurred. Please check the console for more details.");
                 console.log(error);
-            })
-    }
+            });
+    };
+
     return (
-        <div className='p-4'>
+        <div className="delete-book-container">
             <BackButton />
-            <h1 className='text-3xl my-4'>Delete Book</h1>
-            {isLoading ? <Spinner /> : ""}
-            <div className='flex flex-col items-center border-2 border-sky-400 rounded-xl w-[600px] p-8 mx-auto'>
-                <h3 className='text-2xl'>Are You Sure You want to delete this Book?</h3>
+            <h1 className="delete-book-title">Delete Book</h1>
+            {isLoading && <Spinner />}
+            <div className="delete-book-content">
+                <h3 className="delete-book-confirm">Are you sure you want to delete this book?</h3>
                 <button
-                    className='p-4 bg-red-600 text-white m-8 w-full'
+                    className="delete-book-button"
                     onClick={handleDeleteBook}
                 >
-                    Yes,Delete it
+                    Yes, Delete it
                 </button>
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default DeleteBook
+export default DeleteBook;
