@@ -4,6 +4,7 @@ body {
     color: #333;
     padding: 20px;
     background-color: #f7f9fc;
+    margin: 0;
 }
 
 /* Header styling */
@@ -130,5 +131,85 @@ button:disabled {
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* Responsive Styles */
+
+/* Medium screen adjustments (table & button size) */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    .table-container {
+        padding: 15px;
+    }
+    
+    table thead th, table tbody td {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    .add-button, button {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+
+    .operations i {
+        font-size: 1em;
+    }
+}
+
+/* Small screen adjustments (mobile view) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+    }
+    
+    .table-container {
+        padding: 10px;
+    }
+    
+    table, table thead, table tbody, table th, table td, table tr {
+        display: block;
+        width: 100%;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 0.85em;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #555;
+    }
+
+    .add-button, button {
+        width: 100%;
+        padding: 8px;
+        font-size: 1em;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .operations {
+        display: flex;
+        justify-content: space-around;
     }
 }
