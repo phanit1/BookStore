@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './EditBook.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { format } from 'date-fns';
 
 const EditBook = () => {
     const { id } = useParams();
+    const [publishDate, setPublishDate] = useState(new Date());
     const [formData, setFormData] = useState({
         id: '',
         title: '',
@@ -25,6 +29,9 @@ const EditBook = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
+        const formattedDate = format(publishDate, 'dd-MM-yyyy');
+        formData.publishYear = formattedDate;
+        console.log(formData, "FD")
         axios.put(`https://books-store1.vercel.app/books/${id}`, formData)
             .then(() => navigate('/'))
             .catch((error) => console.error('Error updating book:', error));
@@ -52,14 +59,14 @@ const EditBook = () => {
                 />
 
                 <label htmlFor="publishYear">Publish Year</label>
-                <input
-                    type="number"
+                <DatePicker
                     name="publishYear"
-                    value={formData.publishYear}
-                    onChange={handleChange}
+                    selected={publishDate}
+                    onChange={(date) => setPublishDate(date)}
+                    dateFormat="dd-MM-yyyy"
+                    className="date-picker-input"
                     required
                 />
-
                 <button type="submit" className="save-btn">Save Changes</button>
                 <button onClick={() => navigate(-1)} className="back-btn">Back</button>
 

@@ -69,3 +69,11 @@ input[type="number"]:focus {
 .save-btn:focus {
     outline: none;
 }
+/* Optional custom styles for the date picker */
+.date-picker-input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+}

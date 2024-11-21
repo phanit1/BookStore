@@ -36,7 +36,7 @@ table thead th {
     color: #fff;
     font-weight: bold;
     padding: 12px;
-    text-align: left;
+    /* text-align: right; */
 }
 
 table tbody td {
@@ -188,7 +188,7 @@ button:disabled {
 
     table td {
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         padding: 10px;
         font-size: 0.85em;
     }
